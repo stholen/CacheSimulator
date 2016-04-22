@@ -1,13 +1,10 @@
 package Helpers;
 
-import java.awt.Component;
-import java.awt.Container;
-
-import javax.swing.JOptionPane;
-import javax.swing.plaf.ComponentUI;
+import javax.swing.*;
+import java.awt.*;
 
 /**
- * Classe criada para agregar funcçoes que ajudam em calculos e outras necessidades no decorrer da aplicacao
+ * Classe criada para agregar funcï¿½oes que ajudam em calculos e outras necessidades no decorrer da aplicacao
  * a mesma e caracterizada como uma classe de ajuda.
  * @author emerson.mendes
  *
