@@ -23,7 +23,7 @@ public class MemoryTraceModeling extends Functions {
 	}
 
 	private void binarySeparator() {
-		switch (words) {
+		switch (this.words) {
 		case 1:
 			this.shifting = "";
 			this.mapping = this.binary.charAt(-2)+""+this.binary.charAt(-1);

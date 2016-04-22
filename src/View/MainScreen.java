@@ -38,6 +38,8 @@ public class MainScreen extends JFrame {
 	private JRadioButton rb_setAssociative_lru;
 	private ButtonGroup jbg_options_words;
 	private ButtonGroup jbg_options_mapping;
+	private JButton jbtn_process;
+	private String[] slots;
 
 	/**
 	 * Launch the application.
@@ -115,6 +117,9 @@ public class MainScreen extends JFrame {
 
 		JRadioButton rb_amount_words_4 = new JRadioButton("4");
 		jp_amount_words.add(rb_amount_words_4);
+
+
+		jbtn_process = new JButton("Processcle");
 		
 		jbg_options_words.add(rb_amount_words_1);
 		jbg_options_words.add(rb_amount_words_2);
