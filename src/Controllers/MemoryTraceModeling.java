@@ -7,13 +7,13 @@ public class MemoryTraceModeling extends Functions {
 	public String tag;
 	public String mapping;
 	public String shifting;
-	public String binary;
+	private String binary;
 	private int words;
 	public String word_1;
 	public String word_2;
 	public String word_3;
 	public String word_4;
-	int number;
+	private int number;
 
 	public MemoryTraceModeling(int word, int number) {
 
