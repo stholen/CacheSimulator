@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class Functions {
 	
-	int decimal;
+	int decimal,max= 0;
 	String binary;
 	
 	/**
@@ -55,6 +55,14 @@ public class Functions {
 		return binary;
 	}
 	
+	protected int maxValue(int[] array){
+		for(int i : array){
+			if(i>max){
+				max = i;
+			}
+		}
+		return max;
+	}
 	public void desableComponets(Container obj,Boolean boo){
 		try{
 			for(Component cp : obj.getComponents()){
