@@ -258,15 +258,6 @@ public class MainScreen extends JFrame {
 
 				if (rb_directMapping.isSelected()) {
 					
-					DirectMapping dm = new DirectMapping(memoryTrace,words) {
-						
-						@Override
-						public
-						void mappinger() {
-							System.out.println("ola");
-							
-						}
-					};
 					
 				} else if (rb_fullAssociative_fifo.isSelected()) {
 					mappingOption = 2;

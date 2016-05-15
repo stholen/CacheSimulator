@@ -12,7 +12,7 @@ public class MemoryTraceModeling extends Functions {
 
 	public MemoryTraceModeling(int wordLenght, int[] memoryTrace,int memoryTraceItem) {
 		this.wordLenght = wordLenght;
-		this.number = memoryTraceItem;
+		this.number = memoryTraceItem; 
 		this.binary = addZeroLeft(maxValue(memoryTrace), binaryConverter(memoryTraceItem));
 			binarySeparator();
 	}

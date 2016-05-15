@@ -2,17 +2,13 @@ package Controllers;
 
 import Models.CacheMemory;
 import Models.MappingModel;
+import View.MainScreen;
 
-
-
-public abstract class DirectMapping extends CacheMemory {
-	MappingModel mm;
-	
-	public DirectMapping(int[] memoryTrace,int wordLength) {
-		mm = new MappingModel(wordLength, memoryTrace);
-	}
-	
-public abstract void mappinger();
-
+public class DirectMapping extends CacheMemory	{
+	MainScreen ms = new MainScreen();
+	MappingModel mm = new MappingModel(wordLength, memoryTrace);
 	
 }
+
+
+
