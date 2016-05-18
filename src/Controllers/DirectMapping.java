@@ -6,7 +6,7 @@ import View.MainScreen;
 
 public class DirectMapping extends CacheMemory	{
 	MainScreen ms = new MainScreen();
-	MappingModel mm = new MappingModel(wordLength, memoryTrace);
+	//MappingModel mm = new MappingModel(wordLength, MemoryTraceColect.collect());
 	
 }
 

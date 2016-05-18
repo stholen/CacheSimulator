@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class MemoryTraceColect {
 
-	  public static ArrayList<Integer> colect() {
+	  public static ArrayList<Integer> collect() {
 	    
 		  ArrayList<Integer> memoryTrace = new ArrayList<>();
 	       Scanner entrada;

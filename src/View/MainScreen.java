@@ -242,8 +242,8 @@ public class MainScreen extends JFrame {
 		panel_3.setBounds(407, 339, 183, 245);
 		contentPane.add(panel_3);
 
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton jbt_process = new JButton("Process");
+		jbt_process.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int words=1;
 				int mappingOption= 1;
@@ -274,7 +274,7 @@ public class MainScreen extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(407, 297, 183, 40);
-		contentPane.add(btnNewButton);
+		jbt_process.setBounds(407, 297, 183, 40);
+		contentPane.add(jbt_process);
 	}
 }
