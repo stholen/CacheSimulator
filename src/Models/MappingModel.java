@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Helpers.Functions;
 
-public  class MappingModel extends Functions {
+public  class MappingModel  {
 	MemoryTraceModeling[] mtm;
 	
 	public  MappingModel(int wordLength,int[] memoryTrace) {

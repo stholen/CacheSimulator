@@ -268,8 +268,15 @@ public class MainScreen extends JFrame {
 				} else if (rb_setAssociative_lru.isSelected()) {
 					mappingOption = 5;
 				}
-				
-				
+
+				//execulte the logic for choose user with one indice
+				if(optionUser == 1){
+
+				}else if(optionUser == 2) { //execulte the logic for choose user with two indice
+
+
+				}
+
 				
 				
 			}

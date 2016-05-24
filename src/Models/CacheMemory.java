@@ -1,6 +1,7 @@
 package Models;
 
 public class CacheMemory {
+
 	boolean valid = false;
 	private int nHits,nMisses= 0;
 	private int AcessTime = 0;

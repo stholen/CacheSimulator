@@ -2,6 +2,7 @@ package Helpers;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Classe criada para agregar func�oes que ajudam em calculos e outras necessidades no decorrer da aplicacao
@@ -55,7 +56,7 @@ public class Functions {
 		return binary;
 	}
 	
-	protected int maxValue(int[] array){
+	protected int maxValue(ArrayList<Integer> array){
 		for(int i : array){
 			if(i>max){
 				max = i;

@@ -2,6 +2,8 @@ package Models;
 
 import Helpers.Functions;
 
+import java.util.ArrayList;
+
 public class MemoryTraceModeling extends Functions {
 
 	public String tag;
@@ -10,7 +12,7 @@ public class MemoryTraceModeling extends Functions {
 	private int wordLenght;
 	private int number;
 
-	public MemoryTraceModeling(int wordLenght, int[] memoryTrace,int memoryTraceItem) {
+	public MemoryTraceModeling(int wordLenght, ArrayList<Integer> memoryTrace,int memoryTraceItem) {
 		this.wordLenght = wordLenght;
 		this.number = memoryTraceItem; 
 		this.binary = addZeroLeft(maxValue(memoryTrace), binaryConverter(memoryTraceItem));
