@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class Functions {
 	
-	int decimal,max= 0;
-	String binary;
+	static int decimal,max= 0;
+	static String binary;
 	
 	/**
 	 * Metodo que convert um valor decimal do tipo "int" para um binario de tipo "String" 
@@ -22,7 +22,7 @@ public class Functions {
 	 * @return - retorna um binario de tipo "String"
 	 */
 	
-	protected String binaryConverter(int value){
+	 protected String binaryConverter(int value){
 		binary = Integer.toString(value,2);
 		return binary;
 	}
@@ -33,7 +33,7 @@ public class Functions {
 	 * @return - retorna um decimal de tipo "inteiro"
 	 */
 	
-	protected int decimalConverter(String value){
+	 protected int decimalConverter(String value){
 		decimal = Integer.parseInt(value,2);
 		return decimal;
 	}
@@ -45,7 +45,7 @@ public class Functions {
 	 * @param binary - parametro que recebe um numero binario de tipo "String"
 	 * @return - retona um binario de tipo "String"
 	 */
-	protected String addZeroLeft(int number,String binary){
+	 protected String addZeroLeft(int number,String binary){
 		 int width = (int) Math.ceil((Math.log(number)/Math.log(2)))-binary.length();
 		 if(width > 0){
 			 for(int i = 0;i<width;i++){
@@ -56,7 +56,7 @@ public class Functions {
 		return binary;
 	}
 	
-	protected int maxValue(ArrayList<Integer> array){
+	 protected int maxValue(ArrayList<Integer> array){
 		for(int i : array){
 			if(i>max){
 				max = i;

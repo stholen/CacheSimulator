@@ -5,13 +5,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Controllers.DirectMapping;
-import Models.MappingModel;
+import Models.MemoryTraceColect;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.DirectColorModel;
 import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
+import java.io.File;
+import java.net.URL;
 
 public class MainScreen extends JFrame {
 
@@ -21,29 +23,14 @@ public class MainScreen extends JFrame {
 	private JRadioButton rb_setAssociative_fifo;
 	private JPanel jp_amount_words;
 	private JPanel jp_memoryTrace;
-	private JTable table;
-	private JTextField jtf_memoryTrace_1;
-	private JTextField jtf_memoryTrace_2;
-	private JTextField jtf_memoryTrace_3;
-	private JTextField jtf_memoryTrace_4;
-	private JTextField jtf_memoryTrace_8;
-	private JTextField jtf_memoryTrace_7;
-	private JTextField jtf_memoryTrace_6;
-	private JTextField jtf_memoryTrace_5;
-	private JTextField jtf_memoryTrace_12;
-	private JTextField jtf_memoryTrace_11;
-	private JTextField jtf_memoryTrace_10;
-	private JTextField jtf_memoryTrace_9;
-	private JTextField jtf_memoryTrace_16;
-	private JTextField jtf_memoryTrace_15;
-	private JTextField jtf_memoryTrace_14;
-	private JTextField jtf_memoryTrace_13;
 	private JScrollPane scrollPane_1;
 	private JTable table_1;
 	private JPanel panel_3;
 	private JRadioButton rb_setAssociative_lru;
 	private ButtonGroup jbg_options_words;
 	private ButtonGroup jbg_options_mapping;
+	private ButtonGroup jbg_options_slots;
+	private ButtonGroup jbg_options_process;
 	private JButton jbtn_process;
 	private String[] slots;
 
@@ -108,7 +95,7 @@ public class MainScreen extends JFrame {
 		jp_amount_words = new JPanel();
 		jp_amount_words.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Word(s)",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		jp_amount_words.setBounds(407, 192, 195, 95);
+		jp_amount_words.setBounds(407, 192, 195, 55);
 		contentPane.add(jp_amount_words);
 		FlowLayout fl_jp_amount_words = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		jp_amount_words.setLayout(fl_jp_amount_words);
@@ -135,101 +122,29 @@ public class MainScreen extends JFrame {
 		jp_memoryTrace.setBounds(10, 11, 395, 170);
 		contentPane.add(jp_memoryTrace);
 		jp_memoryTrace.setLayout(null);
+		
+		JButton btn_archhive = new JButton("Carregar Arquivo");
+		btn_archhive.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,"Necessario colocar um numero por linha","Alerta",JOptionPane.INFORMATION_MESSAGE);
+				try {
+                    JFileChooser jfc = new JFileChooser();
+                    jfc.setCurrentDirectory(new File("/"));
+                    jfc.setDialogTitle("Carrega Arquivo MemoryTrace");
+                    jfc.showOpenDialog(jfc);
+                    MemoryTraceColect.path = jfc.getSelectedFile().getAbsolutePath();
+                    
 
-		jtf_memoryTrace_1 = new JTextField();
-		jtf_memoryTrace_1.setBounds(10, 34, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_1);
-		jtf_memoryTrace_1.setColumns(10);
-
-		jtf_memoryTrace_2 = new JTextField();
-		jtf_memoryTrace_2.setColumns(10);
-		jtf_memoryTrace_2.setBounds(106, 34, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_2);
-
-		jtf_memoryTrace_3 = new JTextField();
-		jtf_memoryTrace_3.setColumns(10);
-		jtf_memoryTrace_3.setBounds(202, 34, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_3);
-
-		jtf_memoryTrace_4 = new JTextField();
-		jtf_memoryTrace_4.setColumns(10);
-		jtf_memoryTrace_4.setBounds(298, 34, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_4);
-
-		jtf_memoryTrace_8 = new JTextField();
-		jtf_memoryTrace_8.setColumns(10);
-		jtf_memoryTrace_8.setBounds(298, 65, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_8);
-
-		jtf_memoryTrace_7 = new JTextField();
-		jtf_memoryTrace_7.setColumns(10);
-		jtf_memoryTrace_7.setBounds(202, 65, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_7);
-
-		jtf_memoryTrace_6 = new JTextField();
-		jtf_memoryTrace_6.setColumns(10);
-		jtf_memoryTrace_6.setBounds(106, 65, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_6);
-
-		jtf_memoryTrace_5 = new JTextField();
-		jtf_memoryTrace_5.setColumns(10);
-		jtf_memoryTrace_5.setBounds(10, 65, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_5);
-
-		jtf_memoryTrace_12 = new JTextField();
-		jtf_memoryTrace_12.setColumns(10);
-		jtf_memoryTrace_12.setBounds(298, 96, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_12);
-
-		jtf_memoryTrace_11 = new JTextField();
-		jtf_memoryTrace_11.setColumns(10);
-		jtf_memoryTrace_11.setBounds(202, 96, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_11);
-
-		jtf_memoryTrace_10 = new JTextField();
-		jtf_memoryTrace_10.setColumns(10);
-		jtf_memoryTrace_10.setBounds(106, 96, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_10);
-
-		jtf_memoryTrace_9 = new JTextField();
-		jtf_memoryTrace_9.setColumns(10);
-		jtf_memoryTrace_9.setBounds(10, 96, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_9);
-
-		jtf_memoryTrace_16 = new JTextField();
-		jtf_memoryTrace_16.setColumns(10);
-		jtf_memoryTrace_16.setBounds(298, 127, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_16);
-
-		jtf_memoryTrace_15 = new JTextField();
-		jtf_memoryTrace_15.setColumns(10);
-		jtf_memoryTrace_15.setBounds(202, 127, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_15);
-
-		jtf_memoryTrace_14 = new JTextField();
-		jtf_memoryTrace_14.setColumns(10);
-		jtf_memoryTrace_14.setBounds(106, 127, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_14);
-
-		jtf_memoryTrace_13 = new JTextField();
-		jtf_memoryTrace_13.setColumns(10);
-		jtf_memoryTrace_13.setBounds(10, 127, 86, 20);
-		jp_memoryTrace.add(jtf_memoryTrace_13);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new TitledBorder(null, "Processing", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		scrollPane.setBounds(10, 339, 395, 245);
-		contentPane.add(scrollPane);
-
-		table = new JTable();
-		table.setBorder(null);
-		table.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "WORDS", "TAG", "MAPPING", "SHIFTING" }));
-
-		scrollPane.setViewportView(table);
+                } catch (Exception e2) {
+                    JOptionPane.showMessageDialog(null,"Erro ao Carregar arquivo","Error",JOptionPane.ERROR_MESSAGE);
+                }
+			}
+		});
+		btn_archhive.setBounds(95, 30, 174, 48);
+		jp_memoryTrace.add(btn_archhive);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 192, 395, 95);
+		scrollPane_1.setBounds(10, 192, 395, 110);
 		contentPane.add(scrollPane_1);
 		scrollPane_1.setBorder(new TitledBorder(null, "Slots", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
@@ -239,15 +154,65 @@ public class MainScreen extends JFrame {
 
 		panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Results", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(407, 339, 183, 245);
+		panel_3.setBounds(22, 413, 580, 170);
 		contentPane.add(panel_3);
 
 		JButton jbt_process = new JButton("Process");
+		
+		jbt_process.setBounds(407, 361, 195, 40);
+		contentPane.add(jbt_process);
+		
+		JPanel jp_amount_slots = new JPanel();
+		jp_amount_slots.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Slot(s)", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jp_amount_slots.setBounds(407, 247, 195, 55);
+		contentPane.add(jp_amount_slots);
+		jbg_options_slots = new ButtonGroup();
+		jp_amount_slots.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JRadioButton rb_slots_1 = new JRadioButton("1");
+		rb_slots_1.setSelected(true);
+		jp_amount_slots.add(rb_slots_1);
+		
+		JRadioButton rb_slots_2 = new JRadioButton("2");
+		jp_amount_slots.add(rb_slots_2);
+		
+		JRadioButton rb_slots_3 = new JRadioButton("3");
+		jp_amount_slots.add(rb_slots_3);
+		
+		JRadioButton rb_slots_4 = new JRadioButton("4");
+		jp_amount_slots.add(rb_slots_4);
+		
+		jbg_options_slots.add(rb_slots_1);
+		jbg_options_slots.add(rb_slots_2);
+		jbg_options_slots.add(rb_slots_3);
+		jbg_options_slots.add(rb_slots_4);
+		
+		JPanel jp_chooseProcess = new JPanel();
+		jp_chooseProcess.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Processamento", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jp_chooseProcess.setBounds(407, 300, 195, 55);
+		contentPane.add(jp_chooseProcess);
+		jbg_options_process = new ButtonGroup();
+		jp_chooseProcess.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JRadioButton rb_chooseProcess_1 = new JRadioButton("Direto");
+		rb_chooseProcess_1.setSelected(true);
+		jp_chooseProcess.add(rb_chooseProcess_1);
+		
+		JRadioButton rb_chooseProcess_2 = new JRadioButton("A Passo");
+		jp_chooseProcess.add(rb_chooseProcess_2);
+		
+		jbg_options_process.add(rb_chooseProcess_1);
+		jbg_options_process.add(rb_chooseProcess_2);
+		
+		//Actions
+		
 		jbt_process.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int words=1;
 				int mappingOption= 1;
-				int [] memoryTrace = null;
+				int chooseOfProcess = 1;
+				int amountSlots = 4;
+				
 				if (rb_amount_words_1.isSelected()) {
 					words = 1;
 				} else if (rb_amount_words_2.isSelected()) {
@@ -257,7 +222,7 @@ public class MainScreen extends JFrame {
 				}
 
 				if (rb_directMapping.isSelected()) {
-					
+					mappingOption= 1;
 					
 				} else if (rb_fullAssociative_fifo.isSelected()) {
 					mappingOption = 2;
@@ -268,20 +233,25 @@ public class MainScreen extends JFrame {
 				} else if (rb_setAssociative_lru.isSelected()) {
 					mappingOption = 5;
 				}
-
-				//execulte the logic for choose user with one indice
-				if(optionUser == 1){
-
-				}else if(optionUser == 2) { //execulte the logic for choose user with two indice
-
-
+				if(rb_chooseProcess_1.isSelected()){
+					chooseOfProcess = 1;
+				}else if(rb_chooseProcess_2.isSelected()){
+					chooseOfProcess = 2;
 				}
-
+				if(rb_slots_1.isSelected()){
+					amountSlots = 1;
+				}else if(rb_slots_2.isSelected()){
+					amountSlots = 2;
+				}else if(rb_slots_3.isSelected()){
+					amountSlots = 3;
+				}else if(rb_slots_4.isSelected()){
+					amountSlots = 4;
+				}
+				
 				
 				
 			}
 		});
-		jbt_process.setBounds(407, 297, 183, 40);
-		contentPane.add(jbt_process);
+		
 	}
 }

@@ -1,27 +1,21 @@
 package Controllers;
 
-import Models.CacheMemory;
-import Models.MemoryTraceModeling;
-
-import java.awt.*;
 import java.util.ArrayList;
 
+import Models.CacheMemory;
+import Models.MappingModel;
+import Models.MemoryTraceModeling;
 
-public class DirectMapping extends CacheMemory	{
-
-	ArrayList<Integer> memoryTrace;
-	int wordLength;
-	Container container;
-
-	public DirectMapping(int wordLength,Container c){
-		memoryTrace = MemoryTraceColect.collect();
-		this.container = c;
-		for(int i : memoryTrace){
-			mtm = new MemoryTraceModeling(wordLength,)
+public abstract class DirectMapping extends CacheMemory {
+	MemoryTraceModeling[] mtm;
+	ArrayList<Object> memoryTraceMapped =  new ArrayList<>();
+	public DirectMapping(int wordLength,ArrayList<Integer> memoryTrace,int slots) {
+		for (int i = 0; i < memoryTrace.size(); i++) {
+			memoryTraceMapped.add(mtm[i] = new MemoryTraceModeling(wordLength,memoryTrace,memoryTrace.get(i),slots));
 		}
-
 	}
+	
+	abstract void mapper();
+	
+
 }
-
-
-

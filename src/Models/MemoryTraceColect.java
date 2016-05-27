@@ -1,4 +1,4 @@
-package Controllers;
+package Models;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,14 +8,14 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class MemoryTraceColect {
-
+	public static String path = "/home/stholen/workspace/CacheSimulator/src/Models/MemoryTrace/memoryTrace";
 	  public static ArrayList<Integer> collect() {
 	    
 		  ArrayList<Integer> memoryTrace = new ArrayList<>();
 	       Scanner entrada;
-	    try {
+	       try {
 	      
-	    	entrada = new Scanner(new File("/home/stholen/workspace/CacheSimulator/src/Models/memoryTrace"));
+	    	entrada = new Scanner(new File(path));
 	        while (entrada.hasNextLine()) {
 	        memoryTrace.add(entrada.nextInt());
 	       

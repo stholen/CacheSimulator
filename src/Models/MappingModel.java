@@ -6,11 +6,12 @@ import Helpers.Functions;
 
 public  class MappingModel  {
 	MemoryTraceModeling[] mtm;
+	ArrayList<Object> memoryTraceMapped =  new ArrayList<>();
 	
-	public  MappingModel(int wordLength,int[] memoryTrace) {
+	public  MappingModel(int wordLength,ArrayList<Integer> memoryTrace,int slots) {
 		
-		for (int i = 0; i < memoryTrace.length; i++) {
-			mtm[i] = new MemoryTraceModeling(wordLength, memoryTrace,memoryTrace[i]);
+		for (int i = 0; i < memoryTrace.size(); i++) {
+			memoryTraceMapped.add(mtm[i] = new MemoryTraceModeling(wordLength,memoryTrace,memoryTrace.get(i),slots));
 		}
 
 	}

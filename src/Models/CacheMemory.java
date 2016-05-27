@@ -4,7 +4,7 @@ public class CacheMemory {
 
 	boolean valid = false;
 	private int nHits,nMisses= 0;
-	private int AcessTime = 0;
+	
 
 	public int getnHits() {
 		return nHits;

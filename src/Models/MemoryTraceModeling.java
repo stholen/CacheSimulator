@@ -8,33 +8,37 @@ public class MemoryTraceModeling extends Functions {
 
 	public String tag;
 	public int mapping;
+	private	int slots;
 	private String binary;
 	private int wordLenght;
 	private int number;
+	private int tagCut;
 
-	public MemoryTraceModeling(int wordLenght, ArrayList<Integer> memoryTrace,int memoryTraceItem) {
+	public MemoryTraceModeling(int wordLenght, ArrayList<Integer> memoryTrace,int memoryTraceItem,int slots) {
 		this.wordLenght = wordLenght;
+		this.slots = slots;
 		this.number = memoryTraceItem; 
 		this.binary = addZeroLeft(maxValue(memoryTrace), binaryConverter(memoryTraceItem));
-			binarySeparator();
+		tagCut = (int) Math.ceil((Math.log(slots)/Math.log(2)));
+		binarySeparator();
 	}
 
 	private void binarySeparator() {
 		switch (this.wordLenght) {
 		case 1:
-			this.mapping = decimalConverter("" + this.binary.charAt(binary.length() - 2) + this.binary.charAt(binary.length() - 1));
-			this.tag = this.binary.substring(0, binary.length() - 3);
+			this.mapping = number%slots;
+			this.tag = this.binary.substring(0, binary.length() - tagCut);
 			
 			break;
 		case 2:
 			
-			this.mapping = decimalConverter("" + this.binary.charAt(binary.length() - 3) + this.binary.charAt(binary.length() - 2));
-			this.tag = this.binary.substring(0, -4);
+			this.mapping = number%slots;
+			this.tag = this.binary.substring(0,binary.length()- (tagCut+1));
 			break;
 		case 4:
 			
-			this.mapping = decimalConverter("" + this.binary.charAt(binary.length() - 4) + this.binary.charAt(binary.length() - 3));
-			this.tag = this.binary.substring(0, binary.length() - 3);
+			this.mapping = number%slots;
+			this.tag = this.binary.substring(0, binary.length() - (tagCut+2));
 			
 			break;
 
