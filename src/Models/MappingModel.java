@@ -6,7 +6,7 @@ import Helpers.Functions;
 
 public  class MappingModel  {
 	MemoryTraceModeling[] mtm;
-	ArrayList<Object> memoryTraceMapped =  new ArrayList<>();
+	 public ArrayList<MemoryTraceModeling> memoryTraceMapped =  new ArrayList<>();
 	
 	public  MappingModel(int wordLength,ArrayList<Integer> memoryTrace,int slots) {
 		

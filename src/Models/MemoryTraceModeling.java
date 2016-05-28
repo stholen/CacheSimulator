@@ -8,11 +8,13 @@ public class MemoryTraceModeling extends Functions {
 
 	public String tag;
 	public int mapping;
+	public boolean validBit= false;
 	private	int slots;
 	private String binary;
 	private int wordLenght;
 	private int number;
 	private int tagCut;
+	
 
 	public MemoryTraceModeling(int wordLenght, ArrayList<Integer> memoryTrace,int memoryTraceItem,int slots) {
 		this.wordLenght = wordLenght;
@@ -28,18 +30,19 @@ public class MemoryTraceModeling extends Functions {
 		case 1:
 			this.mapping = number%slots;
 			this.tag = this.binary.substring(0, binary.length() - tagCut);
-			
+			this.validBit = true;
 			break;
 		case 2:
 			
 			this.mapping = number%slots;
 			this.tag = this.binary.substring(0,binary.length()- (tagCut+1));
+			this.validBit = true;
 			break;
 		case 4:
 			
 			this.mapping = number%slots;
 			this.tag = this.binary.substring(0, binary.length() - (tagCut+2));
-			
+			this.validBit = true;
 			break;
 
 		}
