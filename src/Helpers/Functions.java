@@ -64,7 +64,7 @@ public class Functions {
 		}
 		return max;
 	}
-	public void desableComponets(Container obj,Boolean boo){
+	public static void desableComponets(Container obj,Boolean boo){
 		try{
 			for(Component cp : obj.getComponents()){
 				cp.setEnabled(boo);

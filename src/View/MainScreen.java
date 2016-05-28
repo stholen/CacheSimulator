@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Helpers.Functions;
 import Models.CacheMemory;
 import Models.MappingModel;
 import Models.MemoryTraceColect;
@@ -130,19 +131,19 @@ public class MainScreen extends JFrame {
 		JButton btn_archhive = new JButton("Carregar Arquivo");
 		btn_archhive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Necessario colocar um numero por linha","Alerta",JOptionPane.INFORMATION_MESSAGE);
-				try {
-                    JFileChooser jfc = new JFileChooser();
-                    jfc.setCurrentDirectory(new File("/"));
-                    jfc.setDialogTitle("Carrega Arquivo MemoryTrace");
-                    jfc.showOpenDialog(jfc);
-                    MemoryTraceColect.path = jfc.getSelectedFile().getAbsolutePath();
+				JOptionPane.showMessageDialog(null,"Necessario colocar um numero por linha\n O arquivo se encontra na pasta Model/MemoryTrace","Alerta",JOptionPane.INFORMATION_MESSAGE);
+				//try {
+				//    JFileChooser jfc = new JFileChooser();
+				//  jfc.setCurrentDirectory(new File("/"));
+				//  jfc.setDialogTitle("Carrega Arquivo MemoryTrace");
+				//  jfc.showOpenDialog(jfc);
+				//  MemoryTraceColect.path = jfc.getSelectedFile().getAbsolutePath();
                     
 
-                } catch (Exception e2) {
-                    JOptionPane.showMessageDialog(null,"Erro ao Carregar arquivo","Error",JOptionPane.ERROR_MESSAGE);
-                }
-			}
+				//} catch (Exception e2) {
+				//JOptionPane.showMessageDialog(null,"Erro ao Carregar arquivo","Error",JOptionPane.ERROR_MESSAGE);
+                    //}
+                    }
 		});
 		btn_archhive.setBounds(95, 30, 174, 48);
 		jp_memoryTrace.add(btn_archhive);
@@ -177,6 +178,7 @@ public class MainScreen extends JFrame {
 		jp_amount_slots.add(rb_slots_2);
 		
 		JRadioButton rb_slots_4 = new JRadioButton("4");
+		rb_slots_4.setSelected(true);
 		jp_amount_slots.add(rb_slots_4);
 		jbg_options_slots.add(rb_slots_2);
 		jbg_options_slots.add(rb_slots_4);
@@ -202,21 +204,13 @@ public class MainScreen extends JFrame {
 		
 		jbt_process.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int words=1;
-				int mappingOption= 1;
-				int chooseOfProcess = 1;
-				int amountSlots = 4;
-				MappingModel mm = new MappingModel(words, MemoryTraceColect.collect(),amountSlots);
-				CacheMemory cm = new CacheMemory();
-				//Quantidade de Slots
 				
-				if(rb_slots_2.isSelected()){
-					amountSlots = 2;
-				}else if(rb_slots_4.isSelected()){
-					amountSlots = 4;
-				}
 				
+				int words = 0;
+				int amountSlots= 0;
+							
 				//tamanho da palavra
+				
 				if (rb_amount_words_1.isSelected()) {
 					words = 1;
 				} else if (rb_amount_words_2.isSelected()) {
@@ -225,61 +219,96 @@ public class MainScreen extends JFrame {
 					words = 4;
 				}
 				
+				//Quantidade de Slots
+				
+				if(rb_slots_2.isSelected()){
+					amountSlots = 2;
+				}else if(rb_slots_4.isSelected()){
+					amountSlots = 4;
+				}
+				
+				
+				
+				MappingModel mm = new MappingModel(words,amountSlots);
+				CacheMemory cm = new CacheMemory();
+				
 				//escolha do mapeamento
 				if (rb_directMapping.isSelected()) {
-					ArrayList<MemoryTraceModeling> bloco = new ArrayList<>();
+					Functions.desableComponets(jp_memoryTrace,true);
+					MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
 					if(rb_chooseProcess_1.isSelected()){
-						for(int i = 0;i < mm.memoryTraceMapped.size();i++) {
-								if(bloco.get(mm.memoryTraceMapped.get(i).mapping) == null) {
-									bloco.add(mm.memoryTraceMapped.get(i).mapping,mm.memoryTraceMapped.get(i));
-									cm.setnMisses();
-								}else if(bloco.get(mm.memoryTraceMapped.get(i).mapping) != null && bloco.get(mm.memoryTraceMapped.get(i).mapping).tag != mm.memoryTraceMapped.get(i).tag) {
-									bloco.add(mm.memoryTraceMapped.get(i).mapping,mm.memoryTraceMapped.get(i));
-									cm.setnMisses();
-								}else if(bloco.get(mm.memoryTraceMapped.get(i).mapping) != null && bloco.get(mm.memoryTraceMapped.get(i).mapping).tag.equals(mm.memoryTraceMapped.get(i).tag)) {
-									cm.setnHits();
-								}
-						}
+						for(int i = 0; i< mm.memoryTraceMapped.size();i++) {
+							if(bloco[mm.memoryTraceMapped.get(i).mapping] ==  null) {
+							
+								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
+								cm.setnMisses();
+							
+							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping != mm.memoryTraceMapped.get(i).mapping) {
+								
+								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
+								cm.setnMisses();
+								
+							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping == mm.memoryTraceMapped.get(i).mapping) {
+								
+								cm.setnHits();
+							}
+						}	
 					}else if(rb_chooseProcess_2.isSelected()){
 						
-						
+						for(int i = 0; i< mm.memoryTraceMapped.size();i++) {
+							if(bloco[mm.memoryTraceMapped.get(i).mapping] ==  null) {
+							
+								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
+								cm.setnMisses();
+							
+							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping != mm.memoryTraceMapped.get(i).mapping) {
+								
+								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
+								cm.setnMisses();
+								
+							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping == mm.memoryTraceMapped.get(i).mapping) {
+								
+								cm.setnHits();
+							}
+						}	
 					}
 					
 				} else if (rb_fullAssociative_fifo.isSelected()) {
-					ArrayList<MemoryTraceModeling> bloco = new ArrayList<>();
 					if(rb_chooseProcess_1.isSelected()){
-						for(int i = 0;i<mm.memoryTraceMapped.size();i++) {
-							if(bloco.get(i%amountSlots)== null) {
-								
-								bloco.add(i%amountSlots,mm.memoryTraceMapped.get(i));
+						
+						MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
+						
+						for(int i = 0; i<mm.memoryTraceMapped.size();i++) {
+							if(bloco[i%amountSlots] ==  null) {
+								bloco[i%amountSlots] = mm.memoryTraceMapped.get(i);
 								cm.setnMisses();
-							}else if(bloco.get(i%amountSlots) != null && !bloco.get(i%amountSlots).tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+							} else if(bloco[i%amountSlots].number != mm.memoryTraceMapped.get(i).number) {
+								bloco[i%amountSlots] = mm.memoryTraceMapped.get(i);
 								cm.setnMisses();
-							}else if (bloco.get(i%amountSlots) != null && bloco.get(i%amountSlots).tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+							}else if(bloco[i%amountSlots].number == mm.memoryTraceMapped.get(i).number) {
 								cm.setnHits();
 							}
-							
 						}
 					}else if(rb_chooseProcess_2.isSelected()){
-						chooseOfProcess = 2;
+						
 					}
 				} else if (rb_fullAssociative_lru.isSelected()) {
 					if(rb_chooseProcess_1.isSelected()){
 						
 					}else if(rb_chooseProcess_2.isSelected()){
-						chooseOfProcess = 2;
+						
 					}
 				} else if (rb_setAssociative_fifo.isSelected()) {
 					if(rb_chooseProcess_1.isSelected()){
 						
 					}else if(rb_chooseProcess_2.isSelected()){
-						chooseOfProcess = 2;
+						
 					}
 				} else if (rb_setAssociative_lru.isSelected()) {
 					if(rb_chooseProcess_1.isSelected()){
 						
 					}else if(rb_chooseProcess_2.isSelected()){
-						chooseOfProcess = 2;
+						
 					}
 				}
 				

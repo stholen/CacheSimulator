@@ -12,7 +12,7 @@ public class MemoryTraceModeling extends Functions {
 	private	int slots;
 	private String binary;
 	private int wordLenght;
-	private int number;
+	public int number;
 	private int tagCut;
 	
 
