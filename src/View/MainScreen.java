@@ -293,10 +293,10 @@ public class MainScreen extends JFrame {
 							if (bloco[i % amountSlots] == null) {
 								bloco[i % amountSlots] = mm.memoryTraceMapped.get(i);
 								cm.setnMisses();
-							} else if (!bloco[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+							} else if (!Functions.contains_in_array(bloco,mm.memoryTraceMapped.get(i).number)) {
 								bloco[i % amountSlots] = mm.memoryTraceMapped.get(i);
 								cm.setnMisses();
-							} else if (bloco[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+							} else if (Functions.contains_in_array(bloco,mm.memoryTraceMapped.get(i).number)) {
 								cm.setnHits();
 							}
 						}
@@ -343,31 +343,42 @@ public class MainScreen extends JFrame {
 						
 						MemoryTraceModeling[] bloco1 = new MemoryTraceModeling[amountSlots];
 						MemoryTraceModeling[] bloco2 = new MemoryTraceModeling[amountSlots];
+						ArrayList<MemoryTraceModeling> par = new ArrayList<>();
+						ArrayList<MemoryTraceModeling> impar = new ArrayList<>();
 						
-						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+						for(int i = 0;i<mm.memoryTraceMapped.size();i++){
 							if(mm.memoryTraceMapped.get(i).number%2==0) {
-								if (bloco1[i % amountSlots] == null) {
-									bloco1[i % amountSlots] = mm.memoryTraceMapped.get(i);
-									cm.setnMisses();
-								} else if (!bloco1[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
-									bloco1[i % amountSlots] = mm.memoryTraceMapped.get(i);
-									cm.setnMisses();
-								} else if (bloco1[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
-									cm.setnHits();
-								}
-							}else if(mm.memoryTraceMapped.get(i).number%2!=0) {
-								if (bloco2[i % amountSlots] == null) {
-									bloco2[i % amountSlots] = mm.memoryTraceMapped.get(i);
-									cm.setnMisses();
-								} else if (!bloco2[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
-									bloco2[i % amountSlots] = mm.memoryTraceMapped.get(i);
-									cm.setnMisses();
-								} else if (bloco2[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
-									cm.setnHits();
-								}
+								par.add(mm.memoryTraceMapped.get(i));
+							}else if(mm.memoryTraceMapped.get(i).number%2!=0){
+								impar.add(mm.memoryTraceMapped.get(i));
 							}
-							
+						}		
+						
+						for(int i = 0;i<par.size();i++) {
+							if (bloco1[i % amountSlots] == null) {
+								bloco1[i % amountSlots] = par.get(i);
+								cm.setnMisses();
+							} else if (!Functions.contains_in_array(bloco1,par.get(i).number)) {
+								bloco1[i % amountSlots] = par.get(i);
+								cm.setnMisses();
+							} else if (Functions.contains_in_array(bloco1,par.get(i).number)) {
+								cm.setnHits();
+							}
 						}
+						
+						for(int i = 0;i<impar.size();i++) {
+							if (bloco2[i % amountSlots] == null) {
+								bloco2[i % amountSlots] = impar.get(i);
+								cm.setnMisses();
+							} else if (!Functions.contains_in_array(bloco2,impar.get(i).number)) {
+								bloco2[i % amountSlots] = impar.get(i);
+								cm.setnMisses();
+							} else if (Functions.contains_in_array(bloco2,impar.get(i).number)) {
+								cm.setnHits();
+							}
+						}
+						
+						
 						textArea.setText("RESULTS FOR SET ASSOCIATIVE - FIFO:\n\n" + cm.toString());
 					} else if (rb_chooseProcess_2.isSelected()) {
 
@@ -387,7 +398,7 @@ public class MainScreen extends JFrame {
 									bloco1[i] = mm.memoryTraceMapped.get(i);
 									cm.setnMisses();
 								}//end IF
-								else if(!lista1.isEmpty() && !lista1.contains(mm.memoryTraceMapped.get(i).tag)) {
+								else if(!lista1.isEmpty() && !lista1.contains(mm.memoryTraceMapped.get(i).number)) {
 									
 									if(lista1.size() >= amountSlots) {
 										lista1.pop();
@@ -400,16 +411,36 @@ public class MainScreen extends JFrame {
 										cm.setnMisses();
 									}//end ELSE
 								}//end ELSEIF
-								else if(!lista1.isEmpty() && lista1.contains(mm.memoryTraceMapped.get(i).tag)) {
+								else if(!lista1.isEmpty() && lista1.contains(mm.memoryTraceMapped.get(i).number)) {
 									lista1.remove(mm.memoryTraceMapped.get(i));
 									lista1.push(mm.memoryTraceMapped.get(i));
 									cm.getnHits();
 								}//end ELSEIF
 							}//end IF
 							else if(mm.memoryTraceMapped.get(i).number%2!=0) {
-								if(lista2.isEmpty()) {
+								if(lista2.isEmpty()){
+									lista2.push(mm.memoryTraceMapped.get(i));
+									bloco2[i] = mm.memoryTraceMapped.get(i);
+									cm.setnMisses();
+								}//end IF
+								else if(!lista2.isEmpty() && !lista2.contains(mm.memoryTraceMapped.get(i).number)) {
 									
-								}
+									if(lista2.size() >= amountSlots) {
+										lista2.pop();
+										lista2.push(mm.memoryTraceMapped.get(i));
+										cm.setnMisses();
+									
+									}//end IF
+									else {
+										lista1.push(mm.memoryTraceMapped.get(i));
+										cm.setnMisses();
+									}//end ELSE
+								}//end ELSEIF
+								else if(!lista2.isEmpty() && lista2.contains(mm.memoryTraceMapped.get(i).number)) {
+									lista2.remove(mm.memoryTraceMapped.get(i));
+									lista2.push(mm.memoryTraceMapped.get(i));
+									cm.getnHits();
+								}//end ELSEIF
 							}//end ELSEIF
 						}//end FOR
 						textArea.setText("RESULTS FOR SET ASSOCIATIVE - LRU:\n\n" + cm.toString());

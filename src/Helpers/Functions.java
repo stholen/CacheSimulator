@@ -1,6 +1,9 @@
 package Helpers;
 
 import javax.swing.*;
+
+import Models.MemoryTraceModeling;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -64,6 +67,14 @@ public class Functions {
 		}
 		return max;
 	}
+	 public static boolean contains_in_array(MemoryTraceModeling [] arr, int item) {
+	      for (int i = 0;i<arr.length;i++) {
+	         if (arr[i].number == item || arr[i].word2 == item || arr[i].word3 == item || arr[i].word4 == item) {
+	            return true;
+	         }
+	      }
+	      return false;
+	   }
 	public static void desableComponets(Container obj,Boolean boo){
 		try{
 			for(Component cp : obj.getComponents()){
