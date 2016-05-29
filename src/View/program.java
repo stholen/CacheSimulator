@@ -1,6 +1,7 @@
 package View;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import Helpers.Functions;
 import Models.CacheMemory;
@@ -11,33 +12,44 @@ import Models.MemoryTraceModeling;
 public class program  extends Functions{
    
 	public static void main(String[] args) {
-		MappingModel mm = new MappingModel(2,4);
-		MemoryTraceModeling[] bloco = new MemoryTraceModeling[4];
+		int amountSlots = 4;
+		MappingModel mm = new MappingModel(1,amountSlots);
 		CacheMemory cm = new CacheMemory();
-		for(int i = 0; i< mm.memoryTraceMapped.size();i++) {
-			if(bloco[mm.memoryTraceMapped.get(i).mapping] ==  null) {
-				bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-				cm.setnMisses();
-				//System.out.println("Palavra: "+bloco[mm.memoryTraceMapped.get(i).mapping].number);
-				//System.out.println("Tag: "+bloco[mm.memoryTraceMapped.get(i).mapping].tag);
-				System.out.println("mapeamento: "+bloco[mm.memoryTraceMapped.get(i).mapping].mapping);
-			}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping != mm.memoryTraceMapped.get(i).mapping) {
-				bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-				cm.setnMisses();
-				//System.out.println("Palavra: "+bloco[mm.memoryTraceMapped.get(i).mapping].number);
-				//System.out.println("Tag: "+bloco[mm.memoryTraceMapped.get(i).mapping].tag);
-				System.out.println("mapeamento: "+bloco[mm.memoryTraceMapped.get(i).mapping].mapping);
-			}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping == mm.memoryTraceMapped.get(i).mapping) {
-				//System.out.println("Palavra: "+bloco[mm.memoryTraceMapped.get(i).mapping].number);
-				//System.out.println("Tag: "+bloco[mm.memoryTraceMapped.get(i).mapping].tag);
-				System.out.println("mapeamento: "+bloco[mm.memoryTraceMapped.get(i).mapping].mapping);
-				cm.setnHits();
-			}
-		}
+
+	
+		Stack<MemoryTraceModeling> lista = new Stack<>();
+		MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
+		
+		
+			for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+				  
+				if(lista.isEmpty()){
+					lista.push(mm.memoryTraceMapped.get(i));
+					bloco[i] = mm.memoryTraceMapped.get(i);
+					System.out.println(lista.get(i).binary);
 					
-			System.out.println(cm.toString());
-		}
+					cm.setnMisses();
+				}else if(!lista.isEmpty() && !lista.contains(mm.memoryTraceMapped.get(i).tag)) {
+					
+					if(lista.size() >= amountSlots) {
+						lista.pop();
+						lista.push(mm.memoryTraceMapped.get(i));
+						cm.setnMisses();
+					
+					}else {
+						lista.push(mm.memoryTraceMapped.get(i));
+						cm.setnMisses();
+					}
+				}else if(!lista.isEmpty() && lista.contains(mm.memoryTraceMapped.get(i).tag)) {
+					lista.remove(mm.memoryTraceMapped.get(i));
+					lista.push(mm.memoryTraceMapped.get(i));
+					cm.getnHits();
+				}
+			}
+			
+			
 
 	}
+}
 
 

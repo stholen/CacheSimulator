@@ -46,7 +46,7 @@ public class Functions {
 	 * @return - retona um binario de tipo "String"
 	 */
 	 protected String addZeroLeft(int number,String binary){
-		 int width = (int) Math.ceil((Math.log(number)/Math.log(2)))-binary.length();
+		 int width = (int) (Math.ceil((Math.log(number)/Math.log(2)))+1)-binary.length();
 		 if(width > 0){
 			 for(int i = 0;i<width;i++){
 				 binary = "0"+binary;

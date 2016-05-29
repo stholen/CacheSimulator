@@ -1,5 +1,9 @@
 package Models;
 
+import java.text.DecimalFormat;
+
+import javax.swing.plaf.DesktopIconUI;
+
 public class CacheMemory {
 
 	
@@ -24,10 +28,12 @@ public class CacheMemory {
 	
 	@Override
 	public String toString() {
+		
+		DecimalFormat df = new DecimalFormat("0.##");
 		String toret = "";
-		toret += "Hits: \t\t\t" + getnHits() + "\n";
-		toret += "Misses: \t\t" + getnMisses() + "\n";
-		toret += "Miss rate: \t\t" + (getnMisses() * 100.0) / (getnHits() + getnMisses()) + " %";
+		toret += "Hits: \t" + getnHits() + "\n";
+		toret += "Misses: \t" + getnMisses() + "\n";
+		toret += "Miss rate: \t" + df.format((getnMisses() * 100.0) / (getnHits() + getnMisses())) + " %";
 		return toret;
 	}
 }

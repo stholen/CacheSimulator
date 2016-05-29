@@ -10,7 +10,7 @@ public class MemoryTraceModeling extends Functions {
 	public int mapping;
 	public boolean validBit= false;
 	private	int slots;
-	private String binary;
+	public String binary;
 	private int wordLenght;
 	public int number;
 	private int tagCut;

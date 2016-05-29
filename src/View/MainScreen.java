@@ -17,8 +17,11 @@ import java.awt.image.DirectColorModel;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 
 public class MainScreen extends JFrame {
 
@@ -30,7 +33,7 @@ public class MainScreen extends JFrame {
 	private JPanel jp_memoryTrace;
 	private JScrollPane scrollPane_1;
 	private JTable table_1;
-	private JPanel panel_3;
+	private JPanel jp_results;
 	private JRadioButton rb_setAssociative_lru;
 	private ButtonGroup jbg_options_words;
 	private ButtonGroup jbg_options_mapping;
@@ -127,23 +130,24 @@ public class MainScreen extends JFrame {
 		jp_memoryTrace.setBounds(10, 11, 395, 170);
 		contentPane.add(jp_memoryTrace);
 		jp_memoryTrace.setLayout(null);
-		
+
 		JButton btn_archhive = new JButton("Carregar Arquivo");
 		btn_archhive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Necessario colocar um numero por linha\n O arquivo se encontra na pasta Model/MemoryTrace","Alerta",JOptionPane.INFORMATION_MESSAGE);
-				//try {
-				//    JFileChooser jfc = new JFileChooser();
-				//  jfc.setCurrentDirectory(new File("/"));
-				//  jfc.setDialogTitle("Carrega Arquivo MemoryTrace");
-				//  jfc.showOpenDialog(jfc);
-				//  MemoryTraceColect.path = jfc.getSelectedFile().getAbsolutePath();
-                    
+				JOptionPane.showMessageDialog(null,
+						"Necessario colocar um numero por linha\n O arquivo se encontra na pasta Model/MemoryTrace",
+						"Alerta", JOptionPane.INFORMATION_MESSAGE);
+				try {
+					JFileChooser jfc = new JFileChooser();
+					jfc.setCurrentDirectory(new File("/"));
+					jfc.setDialogTitle("Carrega Arquivo MemoryTrace");
+					jfc.showOpenDialog(jfc);
+					MemoryTraceColect.path = jfc.getSelectedFile().getAbsolutePath();
 
-				//} catch (Exception e2) {
-				//JOptionPane.showMessageDialog(null,"Erro ao Carregar arquivo","Error",JOptionPane.ERROR_MESSAGE);
-                    //}
-                    }
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Erro ao Carregar arquivo", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		btn_archhive.setBounds(95, 30, 174, 48);
 		jp_memoryTrace.add(btn_archhive);
@@ -157,60 +161,79 @@ public class MainScreen extends JFrame {
 		table_1.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "11", "10", "01", "00" }));
 		scrollPane_1.setViewportView(table_1);
 
-		panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(null, "Results", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(22, 413, 580, 170);
-		contentPane.add(panel_3);
+		jp_results = new JPanel();
+		jp_results.setBorder(new TitledBorder(null, "Results", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		jp_results.setBounds(10, 413, 592, 185);
+		contentPane.add(jp_results);
+		jp_results.setLayout(null);
+
+		JTextArea textArea = new JTextArea(10, 20);
+		textArea.setBounds(12, 12, 556, 146);
+		JScrollPane jsp = new JScrollPane(textArea);
+		jsp.setBounds(12, 23, 568, 150);
+		jp_results.add(jsp);
 
 		JButton jbt_process = new JButton("Process");
-		
-		jbt_process.setBounds(407, 361, 195, 40);
+
+		jbt_process.setBounds(12, 314, 185, 40);
 		contentPane.add(jbt_process);
-		
+
 		JPanel jp_amount_slots = new JPanel();
-		jp_amount_slots.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Slot(s)", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jp_amount_slots.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Slot(s)",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jp_amount_slots.setBounds(407, 247, 195, 55);
 		contentPane.add(jp_amount_slots);
 		jbg_options_slots = new ButtonGroup();
 		jp_amount_slots.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		JRadioButton rb_slots_2 = new JRadioButton("2");
 		jp_amount_slots.add(rb_slots_2);
-		
+
 		JRadioButton rb_slots_4 = new JRadioButton("4");
 		rb_slots_4.setSelected(true);
 		jp_amount_slots.add(rb_slots_4);
 		jbg_options_slots.add(rb_slots_2);
 		jbg_options_slots.add(rb_slots_4);
-		
+
 		JPanel jp_chooseProcess = new JPanel();
-		jp_chooseProcess.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Processamento", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jp_chooseProcess.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Processamento",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jp_chooseProcess.setBounds(407, 300, 195, 55);
 		contentPane.add(jp_chooseProcess);
 		jbg_options_process = new ButtonGroup();
 		jp_chooseProcess.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		JRadioButton rb_chooseProcess_1 = new JRadioButton("Direto");
 		rb_chooseProcess_1.setSelected(true);
 		jp_chooseProcess.add(rb_chooseProcess_1);
-		
+
 		JRadioButton rb_chooseProcess_2 = new JRadioButton("A Passo");
 		jp_chooseProcess.add(rb_chooseProcess_2);
-		
+
 		jbg_options_process.add(rb_chooseProcess_1);
 		jbg_options_process.add(rb_chooseProcess_2);
 		
-		//Actions
-		
-		jbt_process.addActionListener(new ActionListener() {
+		JButton jbt_nextProcess = new JButton("Next");
+		jbt_nextProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
+		}
+		});
+		jbt_nextProcess.setBounds(220, 314, 185, 40);
+		contentPane.add(jbt_nextProcess);
+		jbt_nextProcess.setEnabled(false);
+
+		// Actions
+
+		jbt_process.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
 				int words = 0;
-				int amountSlots= 0;
-							
-				//tamanho da palavra
-				
+				int amountSlots = 0;
+
+				// tamanho da palavra
+
 				if (rb_amount_words_1.isSelected()) {
 					words = 1;
 				} else if (rb_amount_words_2.isSelected()) {
@@ -218,107 +241,119 @@ public class MainScreen extends JFrame {
 				} else if (rb_amount_words_4.isSelected()) {
 					words = 4;
 				}
-				
-				//Quantidade de Slots
-				
-				if(rb_slots_2.isSelected()){
+
+				// Quantidade de Slots
+
+				if (rb_slots_2.isSelected()) {
 					amountSlots = 2;
-				}else if(rb_slots_4.isSelected()){
+				} else if (rb_slots_4.isSelected()) {
 					amountSlots = 4;
 				}
-				
-				
-				
-				MappingModel mm = new MappingModel(words,amountSlots);
+
+				MappingModel mm = new MappingModel(words, amountSlots);
 				CacheMemory cm = new CacheMemory();
-				
-				//escolha do mapeamento
+
+				// escolha do mapeamento
 				if (rb_directMapping.isSelected()) {
-					Functions.desableComponets(jp_memoryTrace,true);
-					MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
-					if(rb_chooseProcess_1.isSelected()){
-						for(int i = 0; i< mm.memoryTraceMapped.size();i++) {
-							if(bloco[mm.memoryTraceMapped.get(i).mapping] ==  null) {
-							
-								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-								cm.setnMisses();
-							
-							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping != mm.memoryTraceMapped.get(i).mapping) {
-								
-								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-								cm.setnMisses();
-								
-							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping == mm.memoryTraceMapped.get(i).mapping) {
-								
-								cm.setnHits();
-							}
-						}	
-					}else if(rb_chooseProcess_2.isSelected()){
-						
-						for(int i = 0; i< mm.memoryTraceMapped.size();i++) {
-							if(bloco[mm.memoryTraceMapped.get(i).mapping] ==  null) {
-							
-								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-								cm.setnMisses();
-							
-							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping != mm.memoryTraceMapped.get(i).mapping) {
-								
-								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-								cm.setnMisses();
-								
-							}else if(bloco[mm.memoryTraceMapped.get(i).mapping].mapping == mm.memoryTraceMapped.get(i).mapping) {
-								
-								cm.setnHits();
-							}
-						}	
-					}
 					
-				} else if (rb_fullAssociative_fifo.isSelected()) {
-					if(rb_chooseProcess_1.isSelected()){
-						
-						MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
-						
-						for(int i = 0; i<mm.memoryTraceMapped.size();i++) {
-							if(bloco[i%amountSlots] ==  null) {
-								bloco[i%amountSlots] = mm.memoryTraceMapped.get(i);
+					MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
+					if (rb_chooseProcess_1.isSelected()) {
+						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+							if (bloco[mm.memoryTraceMapped.get(i).mapping] == null) {
+
+								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
 								cm.setnMisses();
-							} else if(bloco[i%amountSlots].number != mm.memoryTraceMapped.get(i).number) {
-								bloco[i%amountSlots] = mm.memoryTraceMapped.get(i);
+
+							} else if (!bloco[mm.memoryTraceMapped.get(i).mapping].tag.equals(mm.memoryTraceMapped
+									.get(i).tag)) {
+
+								bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
 								cm.setnMisses();
-							}else if(bloco[i%amountSlots].number == mm.memoryTraceMapped.get(i).number) {
+
+							} else if (bloco[mm.memoryTraceMapped.get(i).mapping].tag.equals(mm.memoryTraceMapped
+									.get(i).tag)) {
 								cm.setnHits();
 							}
 						}
-					}else if(rb_chooseProcess_2.isSelected()){
+						textArea.setText("RESULTS FOR DIRECT MAPPING:\n\n" + cm.toString());
+					} else if (rb_chooseProcess_2.isSelected()) {
+							
+						jbt_process.setEnabled(false);
+						jbt_nextProcess.setEnabled(true);
 						
+						
+					}
+
+				} else if (rb_fullAssociative_fifo.isSelected()) {
+					if (rb_chooseProcess_1.isSelected()) {
+
+						MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
+
+						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+							if (bloco[i % amountSlots] == null) {
+								bloco[i % amountSlots] = mm.memoryTraceMapped.get(i);
+								cm.setnMisses();
+							} else if (!bloco[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+								bloco[i % amountSlots] = mm.memoryTraceMapped.get(i);
+								cm.setnMisses();
+							} else if (bloco[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+								cm.setnHits();
+							}
+						}
+
+						textArea.setText("RESULTS FOR FULL ASSOCIATIVE - FIFO\n\n" + cm.toString());
+					} else if (rb_chooseProcess_2.isSelected()) {
+
 					}
 				} else if (rb_fullAssociative_lru.isSelected()) {
-					if(rb_chooseProcess_1.isSelected()){
-						
-					}else if(rb_chooseProcess_2.isSelected()){
-						
+					
+					Stack<MemoryTraceModeling> lista = new Stack<>();
+					MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
+					
+					if (rb_chooseProcess_1.isSelected()) {
+						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+							  
+							if(lista.isEmpty()){
+								lista.push(mm.memoryTraceMapped.get(i));
+								bloco[i] = mm.memoryTraceMapped.get(i);
+								cm.setnMisses();
+							}else if(!lista.isEmpty() && !lista.contains(mm.memoryTraceMapped.get(i).tag)) {
+								
+								if(lista.size() >= amountSlots) {
+									lista.pop();
+									lista.push(mm.memoryTraceMapped.get(i));
+									cm.setnMisses();
+								
+								}else {
+									lista.push(mm.memoryTraceMapped.get(i));
+									cm.setnMisses();
+								}
+							}else if(!lista.isEmpty() && lista.contains(mm.memoryTraceMapped.get(i).tag)) {
+								lista.remove(mm.memoryTraceMapped.get(i));
+								lista.push(mm.memoryTraceMapped.get(i));
+								cm.getnHits();
+							}
+						}
+						textArea.setText("RESULTS FOR FULL ASSOCIATIVE - LRU\n\n" + cm.toString());
+					} else if (rb_chooseProcess_2.isSelected()) {
+
 					}
 				} else if (rb_setAssociative_fifo.isSelected()) {
-					if(rb_chooseProcess_1.isSelected()){
-						
-					}else if(rb_chooseProcess_2.isSelected()){
-						
+					if (rb_chooseProcess_1.isSelected()) {
+
+					} else if (rb_chooseProcess_2.isSelected()) {
+
 					}
 				} else if (rb_setAssociative_lru.isSelected()) {
-					if(rb_chooseProcess_1.isSelected()){
-						
-					}else if(rb_chooseProcess_2.isSelected()){
-						
+					if (rb_chooseProcess_1.isSelected()) {
+
+					} else if (rb_chooseProcess_2.isSelected()) {
+
 					}
 				}
-				
-				
-				
-				
-				
-				
+
 			}
 		});
-		
+
 	}
 }
