@@ -278,8 +278,8 @@ public class MainScreen extends JFrame {
 						textArea.setText("RESULTS FOR DIRECT MAPPING:\n\n" + cm.toString());
 					} else if (rb_chooseProcess_2.isSelected()) {
 							
-						jbt_process.setEnabled(false);
-						jbt_nextProcess.setEnabled(true);
+						//jbt_process.setEnabled(false);
+						//jbt_nextProcess.setEnabled(true);
 						
 						
 					}
@@ -301,7 +301,7 @@ public class MainScreen extends JFrame {
 							}
 						}
 
-						textArea.setText("RESULTS FOR FULL ASSOCIATIVE - FIFO\n\n" + cm.toString());
+						textArea.setText("RESULTS FOR FULL ASSOCIATIVE - FIFO:\n\n" + cm.toString());
 					} else if (rb_chooseProcess_2.isSelected()) {
 
 					}
@@ -334,20 +334,87 @@ public class MainScreen extends JFrame {
 								cm.getnHits();
 							}
 						}
-						textArea.setText("RESULTS FOR FULL ASSOCIATIVE - LRU\n\n" + cm.toString());
+						textArea.setText("RESULTS FOR FULL ASSOCIATIVE - LRU:\n\n" + cm.toString());
 					} else if (rb_chooseProcess_2.isSelected()) {
 
 					}
 				} else if (rb_setAssociative_fifo.isSelected()) {
 					if (rb_chooseProcess_1.isSelected()) {
-
+						
+						MemoryTraceModeling[] bloco1 = new MemoryTraceModeling[amountSlots];
+						MemoryTraceModeling[] bloco2 = new MemoryTraceModeling[amountSlots];
+						
+						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+							if(mm.memoryTraceMapped.get(i).number%2==0) {
+								if (bloco1[i % amountSlots] == null) {
+									bloco1[i % amountSlots] = mm.memoryTraceMapped.get(i);
+									cm.setnMisses();
+								} else if (!bloco1[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+									bloco1[i % amountSlots] = mm.memoryTraceMapped.get(i);
+									cm.setnMisses();
+								} else if (bloco1[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+									cm.setnHits();
+								}
+							}else if(mm.memoryTraceMapped.get(i).number%2!=0) {
+								if (bloco2[i % amountSlots] == null) {
+									bloco2[i % amountSlots] = mm.memoryTraceMapped.get(i);
+									cm.setnMisses();
+								} else if (!bloco2[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+									bloco2[i % amountSlots] = mm.memoryTraceMapped.get(i);
+									cm.setnMisses();
+								} else if (bloco2[i % amountSlots].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+									cm.setnHits();
+								}
+							}
+							
+						}
+						textArea.setText("RESULTS FOR SET ASSOCIATIVE - FIFO:\n\n" + cm.toString());
 					} else if (rb_chooseProcess_2.isSelected()) {
 
 					}
 				} else if (rb_setAssociative_lru.isSelected()) {
 					if (rb_chooseProcess_1.isSelected()) {
-
-					} else if (rb_chooseProcess_2.isSelected()) {
+						
+						Stack<MemoryTraceModeling> lista1 = new Stack<>();
+						MemoryTraceModeling[] bloco1 = new MemoryTraceModeling[amountSlots];
+						Stack<MemoryTraceModeling> lista2 = new Stack<>();
+						MemoryTraceModeling[] bloco2 = new MemoryTraceModeling[amountSlots];
+						
+						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+							if(mm.memoryTraceMapped.get(i).number%2==0) {  
+								if(lista1.isEmpty()){
+									lista1.push(mm.memoryTraceMapped.get(i));
+									bloco1[i] = mm.memoryTraceMapped.get(i);
+									cm.setnMisses();
+								}//end IF
+								else if(!lista1.isEmpty() && !lista1.contains(mm.memoryTraceMapped.get(i).tag)) {
+									
+									if(lista1.size() >= amountSlots) {
+										lista1.pop();
+										lista1.push(mm.memoryTraceMapped.get(i));
+										cm.setnMisses();
+									
+									}//end IF
+									else {
+										lista1.push(mm.memoryTraceMapped.get(i));
+										cm.setnMisses();
+									}//end ELSE
+								}//end ELSEIF
+								else if(!lista1.isEmpty() && lista1.contains(mm.memoryTraceMapped.get(i).tag)) {
+									lista1.remove(mm.memoryTraceMapped.get(i));
+									lista1.push(mm.memoryTraceMapped.get(i));
+									cm.getnHits();
+								}//end ELSEIF
+							}//end IF
+							else if(mm.memoryTraceMapped.get(i).number%2!=0) {
+								if(lista2.isEmpty()) {
+									
+								}
+							}//end ELSEIF
+						}//end FOR
+						textArea.setText("RESULTS FOR SET ASSOCIATIVE - LRU:\n\n" + cm.toString());
+					}//end IF
+					else if (rb_chooseProcess_2.isSelected()) {
 
 					}
 				}
