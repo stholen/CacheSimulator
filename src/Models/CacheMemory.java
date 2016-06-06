@@ -8,6 +8,8 @@ public class CacheMemory {
 
 	
 	private int nHits,nMisses= 0;
+	private double speedUp = 0;
+	
 	
 
 	public int getnHits() {
@@ -33,7 +35,8 @@ public class CacheMemory {
 		String toret = "";
 		toret += "Hits: \t" + getnHits() + "\n";
 		toret += "Misses: \t" + getnMisses() + "\n";
-		toret += "Miss rate: \t" + df.format((getnMisses() * 100.0) / (getnHits() + getnMisses())) + " %";
+		toret += "Miss rate: \t" + df.format((getnMisses() * 100.0) / (getnHits() + getnMisses())) + " %\n";
+		toret += "Hit rate: \t" + df.format((getnHits()* 100.0) / (getnHits() + getnMisses())) + " %\n";
 		return toret;
 	}
 }
