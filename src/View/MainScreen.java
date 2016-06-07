@@ -65,7 +65,7 @@ public class MainScreen extends JFrame {
 	 */
 	public MainScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 685, 746);
+		setBounds(100, 100, 685, 717);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -145,39 +145,39 @@ public class MainScreen extends JFrame {
 		});
 		btn_archhive.setBounds(305, 21, 78, 25);
 		jp_configuration.add(btn_archhive);
-		
+
 		JSpinner sp_slotsAmount = new JSpinner();
 		sp_slotsAmount.setBounds(305, 58, 78, 25);
 		jp_configuration.add(sp_slotsAmount);
-		
+
 		JLabel lblLoadMemorytrace = new JLabel("Load MemoryTrace ::");
 		lblLoadMemorytrace.setFont(new Font("Serif", Font.PLAIN, 12));
 		lblLoadMemorytrace.setBounds(12, 29, 215, 15);
 		jp_configuration.add(lblLoadMemorytrace);
-		
+
 		JLabel lblSlotsAmount = new JLabel("Slots Amount ::");
 		lblSlotsAmount.setFont(new Font("Serif", Font.PLAIN, 12));
 		lblSlotsAmount.setBounds(12, 68, 215, 15);
 		jp_configuration.add(lblSlotsAmount);
-		
+
 		JLabel lblWordSize = new JLabel("Word Size ::");
 		lblWordSize.setFont(new Font("Serif", Font.PLAIN, 12));
 		lblWordSize.setBounds(12, 102, 215, 15);
 		jp_configuration.add(lblWordSize);
-		
+
 		JSpinner sp_wordSize = new JSpinner();
 		sp_wordSize.setBounds(305, 95, 78, 25);
 		jp_configuration.add(sp_wordSize);
-		
+
 		JLabel lblAssociativyDegree = new JLabel("Associativity Degree ::");
 		lblAssociativyDegree.setFont(new Font("Serif", Font.PLAIN, 12));
 		lblAssociativyDegree.setBounds(12, 139, 215, 15);
 		jp_configuration.add(lblAssociativyDegree);
-		
+
 		JSpinner sp_AD = new JSpinner();
 		sp_AD.setBounds(305, 132, 78, 25);
 		jp_configuration.add(sp_AD);
-		
+
 		JSlider jsld_timeAcess = new JSlider();
 		jsld_timeAcess.setFont(new Font("Serif", Font.PLAIN, 10));
 		jsld_timeAcess.setPaintLabels(true);
@@ -186,7 +186,7 @@ public class MainScreen extends JFrame {
 		jsld_timeAcess.setMinimum(100);
 		jsld_timeAcess.setBounds(162, 166, 235, 30);
 		jp_configuration.add(jsld_timeAcess);
-		
+
 		JLabel lblTimeAcess = new JLabel("Time Access in (Ns) ::");
 		lblTimeAcess.setFont(new Font("Serif", Font.PLAIN, 12));
 		lblTimeAcess.setBounds(12, 181, 147, 15);
@@ -205,63 +205,43 @@ public class MainScreen extends JFrame {
 		jsp.setBounds(12, 23, 621, 150);
 		jp_results.add(jsp);
 
-		JButton jbt_process = new JButton("Process");
-
-		jbt_process.setBounds(433, 678, 40, 40);
-		contentPane.add(jbt_process);
-		
 		JButton bt_save = new JButton("Save");
 		bt_save.setForeground(new Color(105, 105, 105));
-		bt_save.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				Functions.desableComponets(jp_configuration, false);
-				slotsAmount = (int) sp_slotsAmount.getValue();
-				wordSize = (int) sp_wordSize.getValue();
-				associativityDegree = (int) sp_AD.getValue();
-				timeAcess = jsld_timeAcess.getValue();
-			}
-		});
 		bt_save.setBackground(new Color(192, 192, 192));
 		bt_save.setBounds(12, 242, 117, 40);
 		contentPane.add(bt_save);
-		
+
 		JButton bt_edit = new JButton("Edit");
 		bt_edit.setForeground(new Color(105, 105, 105));
-		bt_edit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Functions.desableComponets(jp_configuration, true);
-			}
-		});
 		bt_edit.setBackground(new Color(192, 192, 192));
 		bt_edit.setBounds(141, 243, 117, 40);
 		contentPane.add(bt_edit);
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Cache Memory", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		panel.setBounds(12, 294, 645, 185);
 		contentPane.add(panel);
-		
+
 		JScrollPane scrollPane = new JScrollPane((Component) null);
 		scrollPane.setBounds(12, 23, 621, 150);
 		panel.add(scrollPane);
-		
+
 		JTextArea ta_cacheMemory = new JTextArea(10, 20);
 		ta_cacheMemory.setEditable(false);
 		scrollPane.setViewportView(ta_cacheMemory);
-		
+
 		JPanel jp_processOption = new JPanel();
 		jp_processOption.setLayout(null);
 		jp_processOption.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "PROCESS OPTION", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jp_processOption.setBounds(433, 178, 222, 52);
 		contentPane.add(jp_processOption);
-		
+
 		JRadioButton rdbtnStepByStep = new JRadioButton("Step by Step");
 		rdbtnStepByStep.setFont(new Font("Serif", Font.PLAIN, 12));
 		rdbtnStepByStep.setBounds(112, 23, 102, 23);
 		jp_processOption.add(rdbtnStepByStep);
-		
+
 		JRadioButton rdbtnFast = new JRadioButton("Fast");
 		rdbtnFast.setSelected(true);
 		rdbtnFast.setFont(new Font("Serif", Font.PLAIN, 12));
@@ -270,19 +250,28 @@ public class MainScreen extends JFrame {
 		jbg_options_process = new ButtonGroup();
 		jbg_options_process.add(rdbtnFast);
 		jbg_options_process.add(rdbtnStepByStep);
-		
+
 		JButton btnProcess = new JButton("Process");
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(rb_directMapping.isSelected()) {
-					if(rdbtnFast.isSelected()) {
+				if (rb_directMapping.isSelected()) {
+					if (rdbtnFast.isSelected()) {
 						DirectMapping dm = new DirectMapping(wordSize, slotsAmount, ta_cacheMemory, ta_results);
+
 						dm.fastDirectMapping();
 
-					}else if(rb_fullAssociative_fifo.isSelected()) {
-						FullAssociativeMapping  fam = new FullAssociativeMapping(wordSize,associativityDegree,ta_cacheMemory,ta_results);
-						fam.fifo();
+					} else if(rdbtnStepByStep.isSelected()) {
+						DirectMapping dm = new DirectMapping(wordSize, slotsAmount, ta_cacheMemory, ta_results);
+						dm.slowDirectMapping();
 					}
+
+				} else if (rb_fullAssociative_fifo.isSelected()) {
+
+					FullAssociativeMapping fam = new FullAssociativeMapping(wordSize, associativityDegree, ta_cacheMemory, ta_results);
+					fam.fifo();
+				} else if(rb_fullAssociative_lru.isSelected()) {
+					FullAssociativeMapping fam = new FullAssociativeMapping(wordSize, associativityDegree, ta_cacheMemory, ta_results);
+					fam.LRU();
 				}
 			}
 		});
@@ -293,241 +282,78 @@ public class MainScreen extends JFrame {
 		contentPane.add(btnProcess);
 		jbg_options_slots = new ButtonGroup();
 		jbg_options_process = new ButtonGroup();
-		
 
-		// Actions
+		rb_directMapping.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sp_AD.setEnabled(false);
+				sp_slotsAmount.setEnabled(true);
+			}
+		});
 
-		/*jbt_process.addActionListener(new ActionListener() {
+		rb_fullAssociative_fifo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sp_AD.setEnabled(true);
+				sp_slotsAmount.setEnabled(false);
+			}
+		});
+		rb_fullAssociative_lru.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sp_AD.setEnabled(true);
+				sp_slotsAmount.setEnabled(false);
+			}
+		});
+		rb_setAssociative_fifo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sp_AD.setEnabled(true);
+				sp_slotsAmount.setEnabled(true);
+			}
+		});
+		rb_setAssociative_lru.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sp_AD.setEnabled(true);
+				sp_slotsAmount.setEnabled(true);
+			}
+		});
+
+		if(rb_directMapping.isSelected()) {
+			sp_AD.setEnabled(false);
+		}
+		btnProcess.setEnabled(false);
+		bt_save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				int words = 0;
-				int amountSlots = 0;
-				int sleep = 0;
+				Functions.desableComponets(jp_configuration, false);
+				Functions.desableComponets(jp_mappings, false);
+				slotsAmount = (int) sp_slotsAmount.getValue();
+				wordSize = (int) sp_wordSize.getValue();
+				associativityDegree = (int) sp_AD.getValue();
+				timeAcess = jsld_timeAcess.getValue();
+				btnProcess.setEnabled(true);
 
-				// tamanho da palavra
+			}
+		});
+		bt_edit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-				/*if (rb_amount_words_1.isSelected()) {
-					words = 1;
-				} else if (rb_amount_words_2.isSelected()) {
-					words = 2;
-				} else if (rb_amount_words_4.isSelected()) {
-					words = 4;
-				}
-
-				// Quantidade de Slots
-
-				if (rb_slots_2.isSelected()) {
-					amountSlots = 2;
-				} else if (rb_slots_4.isSelected()) {
-					amountSlots = 4;
-				}
-
-				// opcao de passo a passo
-
-				if (rb_chooseProcess_2.isSelected()) {
-					sleep = 5000;
-				}
-
-				MappingModel mm = new MappingModel(words, amountSlots);
-				CacheMemory cm = new CacheMemory();
-
-				// escolha do mapeamento
-				if (rb_directMapping.isSelected()) {
-
-					MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
-
-					for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
-						if (bloco[mm.memoryTraceMapped.get(i).mapping] == null) {
-
-							bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-							cm.setnMisses();
-
-						} else if (!bloco[mm.memoryTraceMapped.get(i).mapping].tag
-								.equals(mm.memoryTraceMapped.get(i).tag)) {
-
-							bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
-							cm.setnMisses();
-
-						} else if (bloco[mm.memoryTraceMapped.get(i).mapping].tag
-								.equals(mm.memoryTraceMapped.get(i).tag)) {
-							cm.setnHits();
-						}
-						try {
-							Thread.sleep(sleep);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
-					textArea.setText("RESULTS FOR DIRECT MAPPING:\n\n" + cm.toString());
-
-				} else if (rb_fullAssociative_fifo.isSelected()) {
-
-					MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
-
-					for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
-						if (bloco[i % amountSlots] == null) {
-							bloco[i % amountSlots] = mm.memoryTraceMapped.get(i);
-							cm.setnMisses();
-						} else if (!Functions.contains_in_array(bloco, mm.memoryTraceMapped.get(i).number)) {
-							bloco[i % amountSlots] = mm.memoryTraceMapped.get(i);
-							cm.setnMisses();
-						} else if (Functions.contains_in_array(bloco, mm.memoryTraceMapped.get(i).number)) {
-							cm.setnHits();
-						}
-						try {
-							Thread.sleep(sleep);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
-
-					textArea.setText("RESULTS FOR FULL ASSOCIATIVE - FIFO:\n\n" + cm.toString());
-
+				Functions.desableComponets(jp_configuration, true);
+				Functions.desableComponets(jp_mappings, true);
+				btnProcess.setEnabled(false);
+				if(rb_directMapping.isSelected()) {
+					sp_AD.setEnabled(false);
+					sp_slotsAmount.setEnabled(true);
+				} else if(rb_fullAssociative_fifo.isSelected()) {
+					sp_AD.setEnabled(true);
+					sp_slotsAmount.setEnabled(false);
 				} else if (rb_fullAssociative_lru.isSelected()) {
-
-					Stack<MemoryTraceModeling> lista = new Stack<>();
-					MemoryTraceModeling[] bloco = new MemoryTraceModeling[amountSlots];
-
-					for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
-
-						if (lista.isEmpty()) {
-							lista.push(mm.memoryTraceMapped.get(i));
-							bloco[i] = mm.memoryTraceMapped.get(i);
-							cm.setnMisses();
-						} else if (!lista.isEmpty() && !lista.contains(mm.memoryTraceMapped.get(i).tag)) {
-
-							if (lista.size() >= amountSlots) {
-								lista.pop();
-								lista.push(mm.memoryTraceMapped.get(i));
-								cm.setnMisses();
-
-							} else {
-								lista.push(mm.memoryTraceMapped.get(i));
-								cm.setnMisses();
-							}
-						} else if (!lista.isEmpty() && lista.contains(mm.memoryTraceMapped.get(i).tag)) {
-							lista.remove(mm.memoryTraceMapped.get(i));
-							lista.push(mm.memoryTraceMapped.get(i));
-							cm.getnHits();
-						}
-					}
-					textArea.setText("RESULTS FOR FULL ASSOCIATIVE - LRU:\n\n" + cm.toString());
-
-				} else if (rb_setAssociative_fifo.isSelected()) {
-					if (rb_chooseProcess_1.isSelected()) {
-
-						MemoryTraceModeling[] bloco1 = new MemoryTraceModeling[amountSlots];
-						MemoryTraceModeling[] bloco2 = new MemoryTraceModeling[amountSlots];
-						ArrayList<MemoryTraceModeling> par = new ArrayList<>();
-						ArrayList<MemoryTraceModeling> impar = new ArrayList<>();
-
-						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
-							if (mm.memoryTraceMapped.get(i).number % 2 == 0) {
-								par.add(mm.memoryTraceMapped.get(i));
-							} else if (mm.memoryTraceMapped.get(i).number % 2 != 0) {
-								impar.add(mm.memoryTraceMapped.get(i));
-							}
-						}
-
-						for (int i = 0; i < par.size(); i++) {
-							if (bloco1[i % amountSlots] == null) {
-								bloco1[i % amountSlots] = par.get(i);
-								cm.setnMisses();
-							} else if (!Functions.contains_in_array(bloco1, par.get(i).number)) {
-								bloco1[i % amountSlots] = par.get(i);
-								cm.setnMisses();
-							} else if (Functions.contains_in_array(bloco1, par.get(i).number)) {
-								cm.setnHits();
-							}
-						}
-
-						for (int i = 0; i < impar.size(); i++) {
-							if (bloco2[i % amountSlots] == null) {
-								bloco2[i % amountSlots] = impar.get(i);
-								cm.setnMisses();
-							} else if (!Functions.contains_in_array(bloco2, impar.get(i).number)) {
-								bloco2[i % amountSlots] = impar.get(i);
-								cm.setnMisses();
-							} else if (Functions.contains_in_array(bloco2, impar.get(i).number)) {
-								cm.setnHits();
-							}
-						}
-
-						textArea.setText("RESULTS FOR SET ASSOCIATIVE - FIFO:\n\n" + cm.toString());
-					} else if (rb_chooseProcess_2.isSelected()) {
-
-					}
-				} else if (rb_setAssociative_lru.isSelected()) {
-					if (rb_chooseProcess_1.isSelected()) {
-
-						Stack<MemoryTraceModeling> lista1 = new Stack<>();
-						MemoryTraceModeling[] bloco1 = new MemoryTraceModeling[amountSlots];
-						Stack<MemoryTraceModeling> lista2 = new Stack<>();
-						MemoryTraceModeling[] bloco2 = new MemoryTraceModeling[amountSlots];
-
-						for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
-							if (mm.memoryTraceMapped.get(i).number % 2 == 0) {
-								if (lista1.isEmpty()) {
-									lista1.push(mm.memoryTraceMapped.get(i));
-									bloco1[i] = mm.memoryTraceMapped.get(i);
-									cm.setnMisses();
-								} // end IF
-								else if (!lista1.isEmpty() && !lista1.contains(mm.memoryTraceMapped.get(i).number)) {
-
-									if (lista1.size() >= amountSlots) {
-										lista1.pop();
-										lista1.push(mm.memoryTraceMapped.get(i));
-										cm.setnMisses();
-
-									} // end IF
-									else {
-										lista1.push(mm.memoryTraceMapped.get(i));
-										cm.setnMisses();
-									} // end ELSE
-								} // end ELSEIF
-								else if (!lista1.isEmpty() && lista1.contains(mm.memoryTraceMapped.get(i).number)) {
-									lista1.remove(mm.memoryTraceMapped.get(i));
-									lista1.push(mm.memoryTraceMapped.get(i));
-									cm.getnHits();
-								} // end ELSEIF
-							} // end IF
-							else if (mm.memoryTraceMapped.get(i).number % 2 != 0) {
-								if (lista2.isEmpty()) {
-									lista2.push(mm.memoryTraceMapped.get(i));
-									bloco2[i] = mm.memoryTraceMapped.get(i);
-									cm.setnMisses();
-								} // end IF
-								else if (!lista2.isEmpty() && !lista2.contains(mm.memoryTraceMapped.get(i).number)) {
-
-									if (lista2.size() >= amountSlots) {
-										lista2.pop();
-										lista2.push(mm.memoryTraceMapped.get(i));
-										cm.setnMisses();
-
-									} // end IF
-									else {
-										lista1.push(mm.memoryTraceMapped.get(i));
-										cm.setnMisses();
-									} // end ELSE
-								} // end ELSEIF
-								else if (!lista2.isEmpty() && lista2.contains(mm.memoryTraceMapped.get(i).number)) {
-									lista2.remove(mm.memoryTraceMapped.get(i));
-									lista2.push(mm.memoryTraceMapped.get(i));
-									cm.getnHits();
-								} // end ELSEIF
-							} // end ELSEIF
-						} // end FOR
-						textArea.setText("RESULTS FOR SET ASSOCIATIVE - LRU:\n\n" + cm.toString());
-					} // end IF
-					else if (rb_chooseProcess_2.isSelected()) {
-
-					}
+					sp_AD.setEnabled(true);
+					sp_slotsAmount.setEnabled(false);
+				} else if(rb_setAssociative_fifo.isSelected() || rb_setAssociative_lru.isSelected()) {
+					sp_AD.setEnabled(true);
+					sp_slotsAmount.setEnabled(true);
 				}
 
 			}
-		});*/
+		});
 
 	}
 }

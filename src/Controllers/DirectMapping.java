@@ -58,6 +58,32 @@ public class DirectMapping extends Functions {
 
 	public void slowDirectMapping() {
 
+		mm = new MappingModel(wordSize, slotsAmount);
+		cm = new CacheMemory();
+		bloco = new MemoryTraceModeling[slotsAmount];
+		for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+			if (bloco[mm.memoryTraceMapped.get(i).mapping] == null) {
+
+				bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
+
+				slotsArea.setText(printCacheMemory());
+				cm.setnMisses();
+
+			} else if (!bloco[mm.memoryTraceMapped.get(i).mapping].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+
+				bloco[mm.memoryTraceMapped.get(i).mapping] = mm.memoryTraceMapped.get(i);
+				slotsArea.setText(printCacheMemory());
+				cm.setnMisses();
+
+			} else if (bloco[mm.memoryTraceMapped.get(i).mapping].tag.equals(mm.memoryTraceMapped.get(i).tag)) {
+				slotsArea.setText(printCacheMemory());
+				cm.setnHits();
+			}
+
+		}
+
+		resultsArea.setText("RESULTS FOR DIRECT MAPPING:\n\n" + cm.toString());
+
 	}
 
 	public String  printCacheMemory() {

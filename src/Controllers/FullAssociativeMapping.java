@@ -7,12 +7,14 @@ import Models.MemoryTraceModeling;
 
 
 import javax.swing.*;
+import java.util.Stack;
 
 /**
  * Created by stholen on 05/06/16.
  */
 public class FullAssociativeMapping extends Functions {
-    int wordSize, associativityDegree = 0;
+    int wordSize=0;
+    int associativityDegree = 0;
     MappingModel mm;
     CacheMemory cm;
     JTextArea slotsArea;
@@ -28,7 +30,8 @@ public class FullAssociativeMapping extends Functions {
     }
 
     public void fifo() {
-
+        mm = new MappingModel(wordSize,associativityDegree);
+        cm = new CacheMemory();
         bloco = new MemoryTraceModeling[associativityDegree];
 
         for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
@@ -47,6 +50,42 @@ public class FullAssociativeMapping extends Functions {
     }
 
     public void LRU() {
+
+        mm = new MappingModel(wordSize,associativityDegree);
+        cm = new CacheMemory();
+        Stack<MemoryTraceModeling> lista = new Stack<>();
+        MemoryTraceModeling[] bloco = new MemoryTraceModeling[associativityDegree];
+
+        for (int i = 0; i < mm.memoryTraceMapped.size(); i++) {
+
+            if (lista.isEmpty()) {
+                lista.push(mm.memoryTraceMapped.get(i));
+                bloco[i] = mm.memoryTraceMapped.get(i);
+                JOptionPane.showMessageDialog(null,bloco[i].number);
+                cm.setnMisses();
+            } else if (!lista.isEmpty() && !lista.contains(mm.memoryTraceMapped.get(i).tag)) {
+
+                if (lista.size() >= associativityDegree) {
+                    lista.pop();
+                    lista.push(mm.memoryTraceMapped.get(i));
+                    JOptionPane.showMessageDialog(null, bloco[i].number);
+                    cm.setnMisses();
+
+                } else {
+                    lista.push(mm.memoryTraceMapped.get(i));
+                    JOptionPane.showMessageDialog(null, bloco[i].number);
+                    cm.setnMisses();
+                }
+            } else if (!lista.isEmpty() && lista.contains(mm.memoryTraceMapped.get(i).tag)) {
+                lista.remove(mm.memoryTraceMapped.get(i));
+                lista.push(mm.memoryTraceMapped.get(i));
+                JOptionPane.showMessageDialog(null, bloco[i].number);
+                cm.getnHits();
+            }
+        }
+
+        //slotsArea.setText(printCacheMemory());
+        resultsArea.setText("RESULTS FOR FULL ASSOCIATIVE - LRU:\n\n" + cm.toString());
     }
 
     public String printCacheMemory() {
@@ -54,7 +93,7 @@ public class FullAssociativeMapping extends Functions {
         String data = "\t\n", tag = "\t\n", slots = "\t\n", binary = "\t\n";
 
         for (int i = 0; i < bloco.length; i++) {
-            if (bloco[i] != null) {
+           /* if (bloco[i] != null) {
                 data += "|" + String.valueOf(bloco[i].number) + "|\n";
                 tag += "|" + bloco[i].tag + "|\n";
                 slots += addZeroLeft(associativityDegree, binaryConverter(i)) + ":: |" + bloco[i].binary + "|\n";
@@ -62,14 +101,15 @@ public class FullAssociativeMapping extends Functions {
                 data += "|Empty|\n";
                 tag += "|Empty|\n";
                 slots += addZeroLeft(associativityDegree, binaryConverter(i)) + ":: |Empty|\n";
-            }
+            }*/
+            System.out.println(i);
         }
         String toret = "FINAL STAGE CACHE\n\n\n";
         toret += "DATA: \t\n" + data + "\n";
         toret += "----------------------\n";
         toret += "TAG: \t\n" + tag + "\n";
         toret += "----------------------\n";
-        toret += "SLOTS: \t\n" + slots + "\n";
+        toret += "GA: \t\n" + slots + "\n";
 
         return toret;
     }
